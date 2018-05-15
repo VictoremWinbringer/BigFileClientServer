@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Server.Controllers
@@ -11,25 +8,22 @@ namespace Server.Controllers
     public class FilesController : Controller
     {
         // GET api/values
-        [HttpGet]
-        public IActionResult Get(long seek)
+        [HttpGet("{id}")]
+        public IActionResult Get(Guid id, long seek)
         {
-            Console.WriteLine(seek);
             var stream = new FileStream(
                 Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", "Video.mp4"),
-                FileMode.Open, FileAccess.Read, FileShare.Read);
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.Read
+                );
+
             if (seek < 0 || seek > stream.Length)
                 throw new ArgumentOutOfRangeException(nameof(seek));
-            stream.Seek(seek, SeekOrigin.Begin);
-            Console.WriteLine(stream.Position);
-            return File(stream, "application/octet-stream");
-        }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            stream.Seek(seek, SeekOrigin.Begin);
+
+            return File(stream, "application/octet-stream");
         }
 
         // POST api/values
