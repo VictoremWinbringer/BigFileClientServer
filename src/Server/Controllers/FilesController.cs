@@ -21,6 +21,9 @@ namespace Server.Controllers
             if (seek < 0 || seek > stream.Length)
                 throw new ArgumentOutOfRangeException(nameof(seek));
 
+            if (seek == stream.Length)
+                return File(new byte[0], "application/octet-stream");
+
             stream.Seek(seek, SeekOrigin.Begin);
 
             return File(stream, "application/octet-stream");
