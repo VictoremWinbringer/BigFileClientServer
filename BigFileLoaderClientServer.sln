@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4239A09C-0D2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{484D1534-5040-4E03-B99F-3FBBE96B808E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{C6145D39-BEC2-4549-8F88-C6F9F82E7065}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "src\Client\Client.csproj", "{C6145D39-BEC2-4549-8F88-C6F9F82E7065}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
