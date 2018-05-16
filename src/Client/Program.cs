@@ -6,6 +6,40 @@ namespace Client
 {
     public class Client
     {
+        public static void DownloadSafe(string id)
+        {
+            while (true)
+            {
+                try
+                {
+                    Download(id);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+        }
+
+        public static void UploadSafe(string id)
+        {
+            var append = false;
+            while (true)
+            {
+                try
+                {
+                    Upload(id, append);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    append = true;
+                    Console.WriteLine(e);
+                }
+            }
+        }
+
         public static void Download(string id)
         {
             using (var fileStream = File.Open(id, FileMode.Append))
@@ -17,11 +51,11 @@ namespace Client
             }
         }
 
-        public static void Upload(string id)
+        public static void Upload(string id, bool append)
         {
             using (var fileStream = File.Open(id, FileMode.Open))
             using (var client = new WebClient())
-            using (var serverStream = client.OpenWrite($"http://localhost:54680/api/v1/Files/{id}?append=false", "PUT"))
+            using (var serverStream = client.OpenWrite($"http://localhost:54680/api/v1/Files/{id}?append={append}", "PUT"))
             {
                 var size = long.Parse(client.DownloadString("http://localhost:54680/api/v1/Files/{id}/Size"));
                 if (size >= fileStream.Length)
@@ -55,8 +89,8 @@ namespace Client
         static void Main(string[] args)
         {
             var fileName = "File.mp4";
-            Client.Download(fileName);
-            Client.Upload(fileName);
+            Client.DownloadSafe(fileName);
+            Client.UploadSafe(fileName);
         }
     }
 }
